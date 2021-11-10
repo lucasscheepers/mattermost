@@ -13,10 +13,6 @@ phases:
       - echo Installing app dependencies...
       - chmod +x prereqs.sh
       - sh prereqs.sh
-      # - curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.18.9/2020-11-02/bin/linux/amd64/kubectl
-      # - chmod +x ./kubectl
-      # - mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
-      # - echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
       - source ~/.bashrc
       - echo Check kubectl version
       - kubectl version --short --client
@@ -46,23 +42,9 @@ phases:
       - kubectl config view
       - echo Check kubectl access
       - kubectl get svc
-      # - echo 'Logging in to Amazon ECR...'
-      # - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
-      # - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME
-      # - docker pull $REPOSITORY_URI:$IMAGE_TAG
-
-  # build:
-  #   commands:
-  #     - echo Build started on `date`
-  #     - echo Building the Docker image...
-  #     - docker build --cache-from $REPOSITORY_URI:$IMAGE_TAG -t $IMAGE_REPO_NAME:$IMAGE_TAG .
-  #     - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
 
   post_build:
     commands:
-      # - echo Build completed on `date`
-      # - echo Pushing the Docker image...
-      # - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAGg
       - echo Push the latest image to cluster
       - kubectl apply -n mattermost-operator -f mattermost-operator.yml
       - kubectl apply -n ind-iv -f mattermost-secrets.yml
