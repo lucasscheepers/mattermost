@@ -1,4 +1,4 @@
-test.yml filter=git-crypt diff=git-crypt
+mattermost-installation.yml filter=git-crypt diff=git-crypt
 
 # exclude .gitattributtes
 .gitattributes !filter !diff
