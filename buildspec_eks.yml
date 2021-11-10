@@ -12,6 +12,7 @@ phases:
       - echo Installing app dependencies...
       - chmod +x prereqs.sh
       - sh prereqs.sh
+      - apt-get install git
       # - curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.18.9/2020-11-02/bin/linux/amd64/kubectl
       # - chmod +x ./kubectl
       # - mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
@@ -29,7 +30,11 @@ phases:
       - echo Downloading the key to decrypt the files
       - aws s3 cp s3://s3-mattermost-iv/mattermost-key.kbx mattermost-key.kbx
       - echo Decrypting the files
+      - git clone https://github.com/lucasscheepers/mattermost.git
+      - cd mattermost
       - git-crypt unlock mattermost-key.kbx
+      - cp mattermost-installation.yml ../mattermost-installation.yml
+      - cd
 
   pre_build:
     commands:
