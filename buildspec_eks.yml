@@ -34,7 +34,7 @@ phases:
       - cd mattermost
       - git-crypt unlock ../mattermost-key.kbx
       - cp mattermost-installation.yml ../mattermost-installation.yml
-      - cp mattermost-secrets.yml ../mattermost-installation.yml
+      - cp mattermost-secrets.yml ../mattermost-secrets.yml
       - cd ..
 
   pre_build:
