@@ -34,6 +34,7 @@ phases:
       - cd mattermost
       - git-crypt unlock ../mattermost-key.kbx
       - cp mattermost-installation.yml ../mattermost-installation.yml
+      - cp mattermost-secrets.yml ../mattermost-installation.yml
       - cd ..
 
   pre_build:
@@ -64,5 +65,6 @@ phases:
       # - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
       - echo Push the latest image to cluster
       - kubectl apply -n mattermost-operator -f mattermost-operator.yml
+      - kubectl apply -n ind-iv -f mattermost-secrets
       - kubectl apply -n ind-iv -f mattermost-installation.yml
       - kubectl rollout restart -n ind-iv -f mattermost-installation.yml
