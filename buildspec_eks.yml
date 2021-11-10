@@ -66,5 +66,6 @@ phases:
       - echo Push the latest image to cluster
       - kubectl apply -n mattermost-operator -f mattermost-operator.yml
       - kubectl apply -n ind-iv -f mattermost-secrets.yml
+      - kubectl delete -n ind-iv -f mattermost-installation.yml
       - kubectl apply -n ind-iv -f mattermost-installation.yml
-      - kubectl rollout restart -n ind-iv -f mattermost-installation.yml
+      # - kubectl rollout restart -n ind-iv -f mattermost-installation.yml
