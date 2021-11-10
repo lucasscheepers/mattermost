@@ -26,7 +26,7 @@ phases:
       - cd git-crypt-0.6.0
       - make
       - make install
-      - cd
+      - cd ..
       - echo Downloading the key to decrypt the files
       - aws s3 cp s3://s3-mattermost-iv/mattermost-key.kbx mattermost-key.kbx
       - echo Decrypting the files
@@ -34,7 +34,7 @@ phases:
       - cd mattermost
       - git-crypt unlock ../mattermost-key.kbx
       - cp mattermost-installation.yml ../mattermost-installation.yml
-      - cd
+      - cd ..
 
   pre_build:
     commands:
