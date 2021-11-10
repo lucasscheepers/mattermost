@@ -32,7 +32,7 @@ phases:
       - echo Decrypting the files
       - git clone https://github.com/lucasscheepers/mattermost.git
       - cd mattermost
-      - git-crypt unlock mattermost-key.kbx
+      - git-crypt unlock ../mattermost-key.kbx
       - cp mattermost-installation.yml ../mattermost-installation.yml
       - cd
 
