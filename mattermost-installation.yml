@@ -1,0 +1,47 @@
+apiVersion: installation.mattermost.com/v1beta1
+kind: Mattermost
+metadata:
+  name: mattermost-iv                                                         # Choose the desired name
+spec:
+  size: 1000users                                                             # Adjust to your requirements
+  useServiceLoadBalancer: true                                                # Set to true to use AWS or Azure load balancers instead of an NGINX controller.
+  ingressName: mattermost.iv                                                  # Hostname used for Ingress, e.g. example.mattermost-example.com. Required when using an Ingress controller. Ignored if useServiceLoadBalancer is true.
+  ingressAnnotations:
+    kubernetes.io/ingress.class: nginx
+  version: 6.0.0
+  licenseSecret: ""                                                           # Name of a Kubernetes secret that contains Mattermost license. Required only for enterprise installation.
+  database:
+    external:
+      secret: db-credentials                                                  # Name of a Kubernetes secret that contains connection string to external database.
+  fileStore:
+    external:
+      url: s3.amazonaws.com                                                   # External File Storage URL.
+      bucket: tst                                                            # File Storage bucket name to use.
+      secret: file-store-credentials
+  mattermostEnv:
+  - name: MM_FILESETTINGS_AMAZONS3SSE
+    value: "false"
+  - name: MM_FILESETTINGS_AMAZONS3SSL
+    value: "false"
+
+---
+# External database PostgreSQL (check https://docs.mattermost.com/install/install-kubernetes.html for MySQL)
+
+apiVersion: v1
+data:
+  DB_CONNECTION_STRING: test
+kind: Secret
+metadata:
+  name: db-credentials
+type: Opaque
+---
+# External file storage S3
+
+apiVersion: v1
+data:
+  accesskey: test
+  secretkey: test
+kind: Secret
+metadata:
+  name: file-store-credentials
+type: Opaque

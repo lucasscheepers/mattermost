@@ -1,0 +1,15 @@
+# Ignore everything
+*.json
+*.pem
+steps.sh
+
+# But not the yml files
+!*.yml
+!.gitignore
+!.README.md
+!prereqs.sh
+!.git-crypt/*
+!.gitattributes
+!.git-crypt/.gitattributes
+!.git-crypt/keys
+!.git-crypt/keys/default
