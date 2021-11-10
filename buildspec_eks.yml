@@ -22,7 +22,9 @@ phases:
       - echo Installing git-crypt...
       - curl https://www.agwa.name/projects/git-crypt/downloads/git-crypt-0.6.0.tar.gz --output git-crypt.tar.gz
       - tar xvzf git-crypt.tar.gz -C .
-      - git-crypt-0.6.0/make
+      - cd git-crypt-0.6.0
+      - make
+      - cd
       - echo Downloading the key to decrypt the files
       - aws s3 cp s3://s3-mattermost-iv/mattermost-key.kbx mattermost-key.kbx
       - echo Decrypting the files
