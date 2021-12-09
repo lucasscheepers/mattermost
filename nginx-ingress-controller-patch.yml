@@ -1,0 +1,9 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mattermost-iv
+spec:
+  tls:
+  - hosts:
+    - mattermost.lucasscheepers.nl
+    secretName: mattermost-tls
