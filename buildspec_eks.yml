@@ -50,3 +50,4 @@ phases:
       - kubectl apply -n ind-iv -f mattermost-secrets.yml
       - kubectl delete -n ind-iv -f mattermost-installation.yml
       - kubectl apply -n ind-iv -f mattermost-installation.yml
+      - kubectl apply -n ind-iv -f nginx-ingress-controller-patch.yml
