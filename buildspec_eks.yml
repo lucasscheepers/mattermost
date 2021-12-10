@@ -43,6 +43,7 @@ phases:
       - echo Check kubectl access
       - kubectl get svc
 
+
   post_build:
     commands:
       - echo Push the latest image to cluster
