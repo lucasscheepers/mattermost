@@ -1,10 +1,26 @@
 ## Deployment
+### 0. Clone all repositories
+**0.1 Clone a repository**
+
+```
+~ # install git-crypt
+~ curl https://www.agwa.name/projects/git-crypt/downloads/git-crypt-0.6.0.tar.gz --output git-crypt.tar.gz
+~ tar xvzf git-crypt.tar.gz -C .
+~ cd git-crypt-0.6.0
+~ make
+~ make install
+~ # Go to the repository folder in your terminal session
+~ # Use the one of the keys you got to decrypt all the encrypted files
+~ git-crypt unlock <key-name>.kbx
+```
+
 ### 1. Create an AWS Kubernetes cluster
 :warning: **If you've already created a Kubernets cluster**: Skip this step and continue with step 2!
 
 **1.1 Create key pair**
 
 ```
+~ # Go to the Mattermost repository folder
 ~ aws ec2 create-key-pair --region eu-west-2 --key-name prodcluster --key-type rsa --query "KeyMaterial" --output text > key-pair-aws.pem
 ~ chmod 400 key-pair-aws.pem
 ```
