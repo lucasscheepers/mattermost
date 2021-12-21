@@ -57,33 +57,33 @@
 **3.1 Create a certificate manager**
 
 ```
-kubectl create namespace cert-manager
-helm repo add jetstack https://charts.jetstack.io
-helm repo update
-helm install cert-manager jetstack/cert-manager --namespace cert-manager --version v1.1.0 --set installCRDs=true
-# verify the installation
-kubectl get pods --namespace cert-manager
+~ kubectl create namespace cert-manager
+~ helm repo add jetstack https://charts.jetstack.io
+~ helm repo update
+~ helm install cert-manager jetstack/cert-manager --namespace cert-manager --version v1.1.0 --set installCRDs=true
+~ # verify the installation
+~ kubectl get pods --namespace cert-manager
 ```
 
 **3.2 Test if the certificate mananger workd properly**
 
 ```
-kubectl apply -f cert-test-resources.yml
-# check the status of the newly created certificate, you may need to wait a few seconds before cert-manager processes the certificate request
-kubectl describe certificate -n cert-manager-test
-# clean up the test resources
-kubectl delete -f cert-test-resources.yml
+~ kubectl apply -f cert-test-resources.yml
+~ # check the status of the newly created certificate, you may need to wait a few seconds before cert-manager processes the certificate request
+~ kubectl describe certificate -n cert-manager-test
+~ # clean up the test resources
+~ kubectl delete -f cert-test-resources.yml
 ```
 
 **3.3 Create a cluster issuer**
 
 ```
-kubectl create ns ind-iv
-kubectl apply -n ind-iv -f cert-cluster-issuer.yml
-# verify the installation
-kubectl get clusterissuer
-kubectl describe clusterissuer letsencrypt-prod-issuer
-kubectl describe clusterissuer letsencrypt-staging-issuer
+~ kubectl create ns ind-iv
+~ kubectl apply -n ind-iv -f cert-cluster-issuer.yml
+~ # verify the installation
+~ kubectl get clusterissuer
+~ kubectl describe clusterissuer letsencrypt-prod-issuer
+~ kubectl describe clusterissuer letsencrypt-staging-issuer
 ```
 
 ### 4. Install Mattermost
@@ -91,8 +91,8 @@ kubectl describe clusterissuer letsencrypt-staging-issuer
 **4.1 Install a Mattermost operator**
 
 ```
-kubectl create ns mattermost-operator
-kubectl apply -n mattermost-operator -f mattermost-operator.yml
+~ kubectl create ns mattermost-operator
+~ kubectl apply -n mattermost-operator -f mattermost-operator.yml
 ```
 
 **4.2 Create a RDS PostgreSQL database and a S3 file storage**
@@ -173,26 +173,26 @@ type: Opaque
 **4.4 Install Mattermost manifest**
 
 ```
-kubectl apply -n ind-iv -f mattermost-secrets.yml
-kubectl apply -n ind-iv -f mattermost-installation.yml
+~ kubectl apply -n ind-iv -f mattermost-secrets.yml
+~ kubectl apply -n ind-iv -f mattermost-installation.yml
 ```
 
 **4.5 Patch the Ingress object to add the certificate**
 
 ```
-# verify if the Ingress object was created successfully
-kubectl get ingress -n ind-iv -o yaml
+~ # verify if the Ingress object was created successfully
+~ kubectl get ingress -n ind-iv -o yaml
 
-# patch the Ingress object
-kubectl apply -n ind-iv -f nginx-ingress-controller-patch.yml
-# verify if the mattermost-tls certificate was issued successfully, this could take a few minutes
-kubectl describe certificate -n ind-iv mattermost-tls
+~ # patch the Ingress object
+~ kubectl apply -n ind-iv -f nginx-ingress-controller-patch.yml
+~ # verify if the mattermost-tls certificate was issued successfully, this could take a few minutes
+~ kubectl describe certificate -n ind-iv mattermost-tls
 ```
 
 **4.6 Install ClamAV**
 
 ```
-kubectl apply -n ind-iv -f clamav-deployment.yml
+~ kubectl apply -n ind-iv -f clamav-deployment.yml
 ```
 
 **4.7 Configure GitLab SSO and install GitLab plugin and Antivirus plugin**
@@ -234,15 +234,15 @@ kubectl apply -n ind-iv -f clamav-deployment.yml
 **5.1 Install RabbitMQ**
 
 ```
-kubectl apply -f rabbitmq-operator.yml
+~ kubectl apply -f rabbitmq-operator.yml
 
-# give it some time to start the RabbitMQ operator
-kubectl apply -n ind-iv -f rabbitmq-installation.yml
+~ # give it some time to start the RabbitMQ operator
+~ kubectl apply -n ind-iv -f rabbitmq-installation.yml
 
-# give it some time to start the Rabbit server and then add an user with administrator permissions
-kubectl exec rabbit-server-0 -n ind-iv -- rabbitmqctl add_user pyhelper pyhelper
-kubectl exec rabbit-server-0 -n ind-iv -- rabbitmqctl set_user_tags pyhelper administrator
-kubectl exec rabbit-server-0 -n ind-iv -- rabbitmqctl set_permissions -p / pyhelper ".*" ".*" ".*"
+~ # give it some time to start the Rabbit server and then add an user with administrator permissions
+~ kubectl exec rabbit-server-0 -n ind-iv -- rabbitmqctl add_user pyhelper pyhelper
+~ kubectl exec rabbit-server-0 -n ind-iv -- rabbitmqctl set_user_tags pyhelper administrator
+~ kubectl exec rabbit-server-0 -n ind-iv -- rabbitmqctl set_permissions -p / pyhelper ".*" ".*" ".*"
 ```
 
 **5.2 Install PyHelper service**
