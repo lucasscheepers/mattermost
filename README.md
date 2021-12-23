@@ -239,6 +239,12 @@ type: Opaque
 ~ # give it some time to start the RabbitMQ operator
 ~ kubectl apply -n ind-iv -f rabbitmq-installation.yml
 
+# if your Pod is stuck in the Pending state, most probably your cluster does not have a Physical Volume Provisioner
+# you might want to install the Local Path Provisioner
+kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml
+kubectl annotate storageclass local-path storageclass.kubernetes.io/is-default-class=true
+# after that, you need to remove and re-create the previously created RabbitMQ Cluster object
+
 ~ # give it some time to start the Rabbit server and then add an user with administrator permissions
 ~ kubectl exec rabbit-server-0 -n ind-iv -- rabbitmqctl add_user pyhelper pyhelper
 ~ kubectl exec rabbit-server-0 -n ind-iv -- rabbitmqctl set_user_tags pyhelper administrator
